@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
+      <router-link to="/main">Main</router-link></span>
+      <hr>
       <router-link to="/auth/login">Login</router-link></span>
       <hr>
       <router-link to="/auth/sign-up">Sign Up</router-link></span>
@@ -8,6 +10,17 @@
     <router-view/>
   </div>
 </template>
+
+<script>
+export default { 
+  data() {
+    return {
+      authenticated: 0,
+    };
+  }
+}
+</script>
+
 
 <style>
 #app {

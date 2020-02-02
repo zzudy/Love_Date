@@ -29,7 +29,7 @@ export default {
           this.$http.post('/auth/login', {pw : this.pw, email: this.email}
                 ).then(response => {
                    if(response.data.success == true){
-                    console.log("success"); 
+                    console.log("success");
                     this.$router.push({name: 'main'});
                     } 
                     else{

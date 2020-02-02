@@ -6,8 +6,12 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
-var mysqlDB = require('./mysql-db');
-mysqlDB.connect();
+
+var session = require("express-session");
+var passport = require('passport');
+var passportConfig = require("./passport/localStrategy.js");
+var sequelize = require('./models').sequelize;   // mysql 시퀄라이저 모델
+
 var app = express();
 
 // view engine setup
@@ -20,13 +24,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({ 
+  secret: 'simpleSNS', 
+  resave: true, 
+  saveUninitialized: false })
+); // 세션 활성화
+
+app.use(passport.initialize());  
+app.use(passport.session());              // passport.deserializeUser 실행
+passportConfig(); 
+sequelize.sync();    //서버가 실행될때 시퀄라이저의 스키마를 DB에 적용시킨다.
+   
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
-});
+}); 
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -38,5 +54,4 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;
