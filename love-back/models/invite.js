@@ -1,25 +1,20 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('user', {
+    return sequelize.define('invite', {
         id: {
             type: DataTypes.INTEGER(11),
             allowNull: false,
             primaryKey: true,
             autoIncrement: true
         },
-        cp_id: {
-            type: DataTypes.INTEGER(11),
+        inviter_id: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+        },
+        invitee_id: {
+            type: DataTypes.STRING(20),
             allowNull: true,
         },
-        email: {
-            type: DataTypes.STRING(30),
-            allowNull: false,
-            unique: true
-        },
-        password: {
-            type: DataTypes.STRING(100),
-            allowNull: false
-        },
-        vertify: {
+        status: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
@@ -27,11 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(30),
             allowNull: false,
             unique: true
-        },
-        salt: {
-          type: DataTypes.STRING(100),
-          allowNull: false
-        }       
+        }     
     }, {
         timestamps: false,
     });

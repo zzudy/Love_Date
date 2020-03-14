@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
+var boardRouter = require('./routes/board');
 
 var session = require("express-session");
 var passport = require('passport');
@@ -36,6 +37,7 @@ passportConfig();
 sequelize.sync();    //서버가 실행될때 시퀄라이저의 스키마를 DB에 적용시킨다.
    
 app.use('/', indexRouter);
+app.use('/board', boardRouter);
 app.use('/auth', authRouter);
 
 

@@ -30,13 +30,21 @@ export default {
                 ).then(response => {
                    if(response.data.success == true){
                     console.log("success");
-                    this.$router.push({name: 'main'});
-                    } 
-                    else{
-                      alert("로그인 실패 다시해주세요");
-                      this.email ='';
-                      this.pw = '';
+                    console.log(response.data.match)
+                    this.$store.commit('set_logined', true)
+                    if(response.data.match != 0) {
+                      this.$store.commit('set_coupled', response.data.match)
+                      this.$router.push({name: 'main'});
                     }
+                    else{
+                      this.$router.push({name: 'invite'});
+                    }
+                  } 
+                  else{
+                    alert("로그인 실패 다시해주세요");
+                    this.email ='';
+                    this.pw = '';
+                  }
                 }).catch((ex) => {
                     console.warn("ERROR!!!!! : ",ex)
                 })

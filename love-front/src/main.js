@@ -4,12 +4,13 @@ import router from './router'
 import store from './store'
 
 import axios from 'axios' 
-
-
+import FullCalendar from 'vue-full-calendar'
+Vue.use(FullCalendar)
 Vue.prototype.$http = axios
 
 
 Vue.config.productionTip = false
+
 
 new Vue({
   router,

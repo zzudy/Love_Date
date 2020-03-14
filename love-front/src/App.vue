@@ -1,21 +1,18 @@
+
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/main">Main</router-link></span>
-      <hr>
-      <router-link to="/auth/login">Login</router-link></span>
-      <hr>
-      <router-link to="/auth/sign-up">Sign Up</router-link></span>
+    <bar/>
     </div>
     <router-view/>
   </div>
 </template>
-
 <script>
+import bar from "./components/bar"
 export default { 
+  components:{bar},
   data() {
     return {
-      authenticated: 0,
     };
   }
 }

@@ -4,16 +4,19 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+require('dotenv').config();
 const db = {};
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+let sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  dialect: 'mysql',
+  dialectOptions: {
+    charset: 'utf8mb4',
+    dateStrings: true,
+    typeCast: true
+  },
+  timezone: '+09:00'
+});
 
 fs
   .readdirSync(__dirname)
@@ -33,8 +36,9 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-//모델정보를 읽어온다.
 
 db.User = require('./user')(sequelize, Sequelize);
+db.Invite = require('./invite')(sequelize, Sequelize);
+db.Board = require('./Board')(sequelize, Sequelize);
 
 module.exports = db;

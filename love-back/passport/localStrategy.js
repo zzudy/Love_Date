@@ -5,15 +5,6 @@ const crypto = require('crypto');
 const controller = require('../controller/controller');
 
 module.exports = function () {
-    passport.serializeUser((user, done) => { 
-        console.log('serialize'); 
-        done(null, user); 
-    }); // 인증 후, 페이지 접근시 마다 사용자 정보를 Session에서 읽어옴. 
-    passport.deserializeUser((user, done) => { 
-        console.log('deserialize'); 
-        done(null, user); 
-    });
-
     passport.use(
         'sign-up',
         new LocalStrategy({
@@ -40,7 +31,7 @@ module.exports = function () {
                         key_for_verify = key_one + key_two;
                         controller.email(data.email, key_for_verify)
                         db.User.create({
-                            cp_id: null,
+                            cp_id: 0,
                             email: data.email,
                             salt: salt,
                             password: hashedPw,
@@ -95,4 +86,12 @@ module.exports = function () {
             }
         )
     );
+    passport.serializeUser((user, done) => { 
+        console.log('serialize'); 
+        done(null, user); 
+    }); // 인증 후, 페이지 접근시 마다 사용자 정보를 Session에서 읽어옴. 
+    passport.deserializeUser((user, done) => { 
+        console.log('deserialize'); 
+        done(null, user);
+    });
 }
