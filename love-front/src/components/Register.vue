@@ -8,21 +8,27 @@
         <textarea v-model="contents" id ="contents" required=""></textarea>
         <br>
         <br>
+        <input id = "file-selector" ref ="file" type="file" @onChange = "upload()">
         <br>
         <button type="button" v-on:click = "register"><b>글 쓰기</b></button>
         <br>
     </div>
 </template>
 <script>
+import AWS from 'aws-sdk'
+
 export default {
   data(){
     return {
-      image : null,
+      file : null,
       title:'',
       contents:''
     }
   },
   methods: {
+    upload(){
+      this.file = this.$refs.file.files[0];
+    },
     register : function(){
       this.$http.post(`/board/register`, 
       {title: this.title, contents: this.contents, img:this.image}).then(response => {

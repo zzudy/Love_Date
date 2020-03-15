@@ -3,14 +3,14 @@
         <h4>Title</h4>
         <div id="title">
             <p></p>
-            {{this.$store.state.data.title}}
+            {{this.title}}
         </div>
         <p></p>
         <p></p>
         <h4>Contents</h4>
         <p></p>
        <div id="contents">
-           {{this.$store.state.data.contents}}
+           {{this.contents}}
         </div>
         
     </div>
@@ -18,10 +18,31 @@
 <script>
 export default {
   name: 'D',
-  props: ['myindex'],
   data(){
     return {
+      title:'',
+      contents:'',
+      img:''
     }
+  },
+  created(){
+     this.$http.get(`/board/text/${this.$route.params.idx}`)
+     .then((response) => {
+       console.log(response);
+       this.title = response.data.text.title;
+       this.contents = response.data.text.contents;
+
+       });
+    //  let idx = this.myindex;
+    //  console.log("글 보여줘");
+    //  this.$http.get(`/board/text/${idx}`)
+    //  .then((response) => {
+    //    console.log("rererere"+ response.data.removable);
+    //    this.$store.commit('setData', response.data);
+    //    console.log("rererere"+ this.$store.state.data.removable);
+       
+    //                   this.$router.push({name: 'D', params:{idx: t_idx}});
+    //    });
   },
   methods: {
   },

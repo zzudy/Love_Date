@@ -47,6 +47,13 @@ const routes = [
     component: function () {
       return import('../components/Register.vue')
     }
+  },
+  {
+    path: '/board/detail',
+    name: 'Detail',
+    component: function () {
+      return import('../components/Detail.vue')
+    }
   }
 ]
 
